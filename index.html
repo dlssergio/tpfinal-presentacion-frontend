@@ -3,232 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FrontEnd - TP Final</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Presentación FrontEnd - Sergio Daniel de los Santos</title>
+    <!-- Tipografía Moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* ESTILOS BASE */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: #e9ecef;
+        /* --- ESTILOS GENERALES --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
             font-family: 'Outfit', sans-serif;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            align-items: center;
+            background-color: #111;
+            color: white;
         }
 
-        /* CONTENEDOR DE DIAPOSITIVA (16:9) */
+        /* --- SLIDES --- */
         .slide {
-            width: 1280px;
-            height: 720px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
-            overflow: hidden;
+            display: none; /* Ocultos por defecto */
+            height: 100vh;
+            width: 100vw;
+            padding: 40px 80px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: white; /* Fondo base blanco para contenido */
+            color: #333;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            z-index: 10;
+        }
+
+        /* --- CONTENIDO --- */
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        h1 { font-size: 5rem; line-height: 1; margin-bottom: 20px; color: #0d6efd; }
+        h2 { font-size: 3.5rem; margin-bottom: 30px; color: #212529; }
+        h3 { font-size: 2rem; color: #0d6efd; margin-bottom: 15px; }
+        p { font-size: 1.6rem; line-height: 1.5; color: #6c757d; margin-bottom: 20px; }
+        
+        ul { list-style: none; padding: 0; }
+        li { font-size: 1.4rem; margin-bottom: 15px; padding-left: 30px; position: relative; }
+        li::before { content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900; color: #198754; position: absolute; left: 0; }
+
+        /* --- IMÁGENES Y MARCOS --- */
+        .mockup-container {
             position: relative;
             display: flex;
-            flex-direction: column;
-            page-break-after: always; /* Para imprimir en PDF */
-        }
-
-        /* TIPOGRAFÍA */
-        h1 { font-size: 62px; color: #0d6efd; font-weight: 800; margin-bottom: 10px; }
-        h2 { font-size: 52px; color: #212529; margin-bottom: 30px; font-weight: 700; }
-        h3 { font-size: 32px; color: #0d6efd; margin-bottom: 15px; }
-        p, li { font-size: 24px; color: #495057; line-height: 1.6; }
-        
-        /* UTILIDADES */
-        .content { padding: 60px; height: 100%; display: flex; flex-direction: column; justify-content: center; }
-        .row { display: flex; gap: 50px; align-items: center; height: 100%; }
-        .col { flex: 1; }
-        
-        /* IMÁGENES (Marcos de dispositivo) */
-        .screenshot-frame {
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            border: 8px solid #212529;
-            overflow: hidden;
-            background: white;
-            display: flex;
-            align-items: center;
             justify-content: center;
-        }
-        .screenshot-frame img {
-            width: 100%;
-            height: auto;
-            display: block;
+            align-items: center;
         }
 
-        /* --- DIAPOSITIVA 1: PORTADA --- */
-        .slide-1 {
+        .mockup {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid #e5e7eb;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .mockup:hover { transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.02); }
+
+        /* --- DIAPOSITIVA 1: PORTADA (Estilo Hero) --- */
+        #slide-1 {
             background: linear-gradient(135deg, #0d6efd 0%, #0043a8 100%);
             color: white;
             text-align: center;
+            justify-content: center;
+            flex-direction: column;
         }
-        .slide-1 h1 { color: white; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .slide-1 p { color: rgba(255,255,255,0.9); font-size: 28px; }
-        .slide-1 .hero-img {
-            width: 80%;
-            margin: 40px auto 0;
-            border-radius: 12px 12px 0 0;
-            box-shadow: 0 -20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
+        #slide-1 h1 { color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.2); font-size: 6rem; }
+        #slide-1 h2 { color: rgba(255,255,255,0.9); font-size: 2.5rem; font-weight: 300; margin-bottom: 50px; }
+        #slide-1 .meta { font-size: 1.5rem; opacity: 0.8; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 20px; margin-top: 40px; display: inline-block; }
+
+        /* --- DIAPOSITIVA 2: EL PROYECTO --- */
+        #slide-2 .tech-badge {
+            display: inline-block; background: #e9ecef; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 1rem; color: #495057; margin: 5px;
         }
 
-        /* --- DIAPOSITIVA 2: ARQUITECTURA --- */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-top: 30px;
+        /* --- DIAPOSITIVA 3: ARQUITECTURA --- */
+        #slide-3 { background-color: #f8f9fa; }
+        .tech-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; transition: transform 0.3s; }
+        .tech-card:hover { transform: translateY(-10px); }
+        .tech-card i { font-size: 3rem; color: #0d6efd; margin-bottom: 15px; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+        /* --- DIAPOSITIVA 5: CIERRE --- */
+        #slide-5 {
+            background: #212529;
+            color: white;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
         }
-        .tech-item {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 12px;
-            border-left: 6px solid #0d6efd;
+        #slide-5 h1 { color: white; margin-bottom: 30px; }
+        .link-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 1.8rem;
+            font-family: monospace;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* --- DIAPOSITIVA 3: DEMO (CARRITO) --- */
-        .overlap-grid {
-            position: relative;
-            height: 500px;
+        /* --- CONTROLES --- */
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
         }
-        .img-back {
-            position: absolute;
-            top: 0; left: 0; width: 75%; z-index: 1;
-            transform: rotate(-2deg);
+        .btn-nav {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.3s;
         }
-        .img-front {
-            position: absolute;
-            bottom: 20px; right: 0; width: 50%; z-index: 2;
-            border: 4px solid white;
-            transform: rotate(3deg);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
+        .btn-nav:hover { background: #0d6efd; }
+        .progress-bar { position: fixed; bottom: 0; left: 0; height: 5px; background: #0d6efd; width: 0%; transition: width 0.5s; z-index: 100; }
 
     </style>
 </head>
 <body>
 
+    <!-- BARRA DE PROGRESO -->
+    <div class="progress-bar" id="progressBar"></div>
+
     <!-- SLIDE 1: PORTADA -->
-    <div class="slide slide-1">
-        <div class="content">
-            <p style="font-weight: 300; letter-spacing: 2px; text-transform: uppercase; font-size: 18px;">Trabajo Práctico Final</p>
-            <h1>FrontEnd </h1>
-            <p>Sergio Daniel de los Santos | Diego Moreno Rico </p>
-            <p> Desarrollo de Sistemas Web</p>
-            
-            <!-- FOTO: PORTADA.JPG -->
-            <div class="hero-img">
-                <img src="portada.jpg" style="width: 100%;" alt="Portada del Sitio">
+    <div class="slide active" id="slide-1">
+        <div>
+            <p style="text-transform: uppercase; letter-spacing: 4px; font-size: 1.2rem; margin-bottom: 10px; opacity: 0.8;">Trabajo Práctico Grupal 2</p>
+            <h1>FrontEnd</h1>
+            <h2>E-commerce de Tecnología SPA</h2>
+            <div class="meta">
+                <strong>Alumnos:</strong> Sergio de los Santos | Diego Moreno Rico<br>
+                <strong>Materia:</strong> Desarrollo de Sistemas Web (Front End)
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 2: EL PROYECTO -->
-    <div class="slide">
-        <div class="content">
-            <div class="row">
-                <div class="col">
-                    <h3 class="text-primary">Objetivo</h3>
-                    <h2>E-commerce SPA</h2>
-                    <p>Desarrollo de una aplicación web moderna que consume una <strong>API REST</strong> real para mostrar productos tecnológicos.</p>
-                    <ul style="margin-left: 25px; margin-top: 30px;">
-                        <li>Navegación dinámica con <strong>React Router</strong>.</li>
-                        <li>Filtrado por categorías (Celulares, Computación).</li>
-                        <li>Diseño Responsivo con <strong>Bootstrap</strong>.</li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <!-- FOTO: CATALOGO.PNG -->
-                    <div class="screenshot-frame">
-                        <img src="catalogo.png" alt="Catálogo de Productos">
+    <!-- SLIDE 2: EL DESAFÍO Y SOLUCIÓN -->
+    <div class="slide" id="slide-2">
+        <div class="content-wrapper">
+            <div>
+                <h3>El Desafío</h3>
+                <h2>Construir una Experiencia Real</h2>
+                <p>El objetivo fue desarrollar una aplicación web que consumiera datos reales, gestionara el estado de manera global y ofreciera una experiencia de usuario fluida y moderna.</p>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Solución Propuesta</h3>
+                    <p><strong>"FrontEnd Store"</strong>: Un marketplace tecnológico que simula un entorno de compra completo.</p>
+                    <div>
+                        <span class="tech-badge">SPA</span>
+                        <span class="tech-badge">API Rest</span>
+                        <span class="tech-badge">Responsive</span>
                     </div>
                 </div>
+            </div>
+            <div class="mockup-container">
+                <!-- FOTO DE TU HOME CON BANNERS -->
+                <img src="portada.jpg" class="mockup" alt="Portada del Sitio">
             </div>
         </div>
     </div>
 
     <!-- SLIDE 3: ARQUITECTURA TÉCNICA -->
-    <div class="slide">
-        <div class="content">
-            <h2>Stack Tecnológico</h2>
-            <p>Selección de herramientas basada en la documentación de la cátedra.</p>
-            
-            <div class="tech-grid">
-                <div class="tech-item">
-                    <h3><i class="fa-brands fa-react"></i> React & Hooks</h3>
-                    <p>Uso de <code>useState</code> y <code>useEffect</code> para ciclo de vida y estados locales.</p>
+    <div class="slide" id="slide-3">
+        <div class="content-wrapper">
+            <div>
+                <h2>Arquitectura del Proyecto</h2>
+                <p>Selección de tecnologías basada en el plan de estudios, priorizando escalabilidad y mantenimiento.</p>
+                <ul style="margin-top: 30px;">
+                    <li><strong>Componentes Funcionales:</strong> Lógica encapsulada y reutilizable.</li>
+                    <li><strong>Custom Hooks:</strong> Para lógica de carrito y consumo de API.</li>
+                    <li><strong>Separación de Responsabilidades:</strong> Servicios, Contexto y Vistas.</li>
+                </ul>
+            </div>
+            <div class="grid-4">
+                <div class="tech-card">
+                    <i class="fa-brands fa-react"></i>
+                    <h4>React 18</h4>
+                    <small>Core & Hooks</small>
                 </div>
-                <div class="tech-item">
-                    <h3><i class="fa-solid fa-database"></i> Axios & API</h3>
-                    <p>Consumo asíncrono de datos desde <em>DummyJSON</em> con manejo de errores (Try/Catch).</p>
+                <div class="tech-card">
+                    <i class="fa-solid fa-route"></i>
+                    <h4>Router v6</h4>
+                    <small>Navegación Dinámica</small>
                 </div>
-                <div class="tech-item">
-                    <h3><i class="fa-solid fa-box-open"></i> Context API</h3>
-                    <p>Gestión de <strong>Estado Global</strong> para el Carrito de Compras.</p>
+                <div class="tech-card">
+                    <i class="fa-solid fa-server"></i>
+                    <h4>Axios</h4>
+                    <small>Consumo API</small>
                 </div>
-                <div class="tech-item">
-                    <h3><i class="fa-solid fa-check-double"></i> Formik & Yup</h3>
-                    <p>Manejo y validación robusta de formularios.</p>
+                <div class="tech-card">
+                    <i class="fa-solid fa-box-open"></i>
+                    <h4>Context API</h4>
+                    <small>Estado Global</small>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 4: FUNCIONALIDAD DESTACADA -->
-    <div class="slide">
-        <div class="content">
-            <div class="row">
-                <div class="col">
-                    <div class="overlap-grid">
-                        <!-- FOTO: CARRITO.PNG -->
-                        <div class="screenshot-frame img-back">
-                            <img src="carrito.png" alt="Carrito de Compras">
-                        </div>
-                        <!-- FOTO: ALERTA.PNG -->
-                        <div class="screenshot-frame img-front">
-                            <img src="alerta.png" alt="Alerta SweetAlert">
-                        </div>
-                    </div>
-                </div>
-                <div class="col" style="padding-left: 40px;">
-                    <h2>Experiencia de Usuario</h2>
-                    
-                    <div style="margin-bottom: 30px;">
-                        <h3><i class="fa-solid fa-cart-shopping"></i> Carrito Persistente</h3>
-                        <p>Los productos seleccionados se guardan en <code>localStorage</code>, permitiendo al usuario recargar sin perder su compra.</p>
-                    </div>
+    <!-- SLIDE 4: FUNCIONALIDADES Y UX -->
+    <div class="slide" id="slide-4">
+        <div class="content-wrapper">
+            <div class="mockup-container">
+                <!-- FOTO DEL CARRITO O DETALLE -->
+                <img src="carrito.png" class="mockup" alt="Carrito de Compras" style="transform: perspective(1000px) rotateY(5deg);">
+            </div>
+            <div style="padding-left: 40px;">
+                <h2>Experiencia de Usuario (UX)</h2>
+                <p>Más allá de la funcionalidad, se puso foco en la interacción.</p>
 
-                    <div>
-                        <h3><i class="fa-solid fa-bell"></i> Feedback Visual</h3>
-                        <p>Implementación de <strong>SweetAlert2</strong> para notificaciones de éxito y validación de formularios en tiempo real.</p>
-                    </div>
+                <div style="margin-bottom: 30px;">
+                    <h3><i class="fa-solid fa-cart-shopping"></i> Carrito Persistente</h3>
+                    <p>Implementación de <code>localStorage</code> para no perder la compra al recargar, gestionado vía Context API.</p>
+                </div>
+
+                <div>
+                    <h3><i class="fa-solid fa-bell"></i> Feedback Visual</h3>
+                    <p>Alertas interactivas con <strong>SweetAlert2</strong> y validación de formularios en tiempo real con <strong>Formik + Yup</strong>.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- SLIDE 5: CIERRE -->
-    <div class="slide" style="justify-content: center; text-align: center; background: #212529; color: white;">
-        <div class="content">
-            <i class="fa-solid fa-rocket" style="font-size: 80px; color: #0d6efd; margin-bottom: 30px;"></i>
-            <h1 style="color: white;">Proyecto Finalizado</h1>
-            <p style="color: #adb5bd; margin-bottom: 50px;">Aplicación desplegada y lista para su uso.</p>
+    <div class="slide" id="slide-5">
+        <div style="text-align: center;">
+            <i class="fa-solid fa-check-circle" style="font-size: 80px; color: #0d6efd; margin-bottom: 30px;"></i>
+            <h1>¡Proyecto Finalizado!</h1>
+            <p style="color: #adb5bd; max-width: 700px; margin: 0 auto 50px auto;">
+                La aplicación cumple con todos los requisitos de la consigna y añade valor a través de una interfaz pulida y funcionalidades avanzadas.
+            </p>
             
-            <div style="display: inline-flex; gap: 40px; justify-content: center;">
-                <div style="background: rgba(255,255,255,0.1); padding: 20px 40px; border-radius: 10px; border: 1px solid #495057;">
-                    <i class="fa-solid fa-globe" style="color: #0d6efd; margin-right: 10px;"></i> Deploy: tp2-frontend2025.netlify.app
+            <div style="display: flex; gap: 20px; justify-content: center;">
+                <div class="link-box">
+                    <i class="fa-solid fa-globe" style="color: #0d6efd;"></i> Deploy: tp2-frontend2025.netlify.app
                 </div>
-                <div style="background: rgba(255,255,255,0.1); padding: 20px 40px; border-radius: 10px; border: 1px solid #495057;">
-                    <i class="fa-brands fa-github" style="color: #0d6efd; margin-right: 10px;"></i> Código: github.com/dlssergio/tpfinal-frontend
+                <div class="link-box">
+                    <i class="fa-brands fa-github" style="color: #0d6efd;"></i> Código: github.com/dlssergio/tpfinal-frontend
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- CONTROLES -->
+    <div class="controls">
+        <button class="btn-nav" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="btn-nav" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progressBar');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+            // Actualizar barra de progreso
+            const progress = ((index + 1) / slides.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Iniciar
+        showSlide(0);
+    </script>
 </body>
 </html>
